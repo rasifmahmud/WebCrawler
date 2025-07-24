@@ -132,11 +132,24 @@ The crawler uses IMDbPie with the following settings:
    pip install -r requirements.txt
    ```
 
-2. **API rate limiting**: The IMDB API may rate limit requests. The script includes caching to minimize API calls.
+2. **imdbpie compatibility issues**: The imdbpie library may have compatibility issues with Python 3.10+
+   - Error: `ImportError: cannot import name 'MutableMapping' from 'collections'`
+   - **Solution**: Use an alternative library like `cinemagoer`:
+   ```bash
+   pip uninstall imdbpie
+   pip install cinemagoer
+   ```
+   - Then modify the import in `main.py`:
+   ```python
+   # Replace: from imdbpie import Imdb
+   # With: from imdb import IMDb as Imdb
+   ```
 
-3. **Movie not found**: If a movie isn't found on IMDB, it will receive a rating of '0'
+3. **API rate limiting**: The IMDB API may rate limit requests. The script includes caching to minimize API calls.
 
-4. **File permissions**: Ensure the script has read/write permissions for the data files
+4. **Movie not found**: If a movie isn't found on IMDB, it will receive a rating of '0'
+
+5. **File permissions**: Ensure the script has read/write permissions for the data files
 
 ## Contributing
 

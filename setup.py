@@ -31,17 +31,30 @@ def install_dependencies():
 
 def verify_dependencies():
     """Verify that all dependencies are properly installed."""
-    dependencies = ['requests', 'beautifulsoup4', 'imdbpie']
+    dependencies = [
+        ('requests', 'requests'),
+        ('beautifulsoup4', 'bs4'),
+        ('imdbpie', 'imdbpie')
+    ]
     
-    for dep in dependencies:
+    all_installed = True
+    for package_name, import_name in dependencies:
         try:
-            __import__(dep.replace('-', '_'))
-            print(f"✓ {dep} is installed")
-        except ImportError:
-            print(f"✗ {dep} is not installed")
-            return False
+            if import_name == 'imdbpie':
+                # Special check for imdbpie due to potential compatibility issues
+                from imdbpie import Imdb
+                print(f"✓ {package_name} is installed")
+            else:
+                __import__(import_name)
+                print(f"✓ {package_name} is installed")
+        except ImportError as e:
+            print(f"✗ {package_name} is not installed or has compatibility issues")
+            if import_name == 'imdbpie':
+                print("  Note: imdbpie may have compatibility issues with newer Python versions")
+                print("  Consider using 'cinemagoer' as an alternative")
+            all_installed = False
     
-    return True
+    return all_installed
 
 def check_input_file():
     """Check if the input file exists and has the correct format."""
