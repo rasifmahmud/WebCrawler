@@ -1,0 +1,5 @@
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+# Note: imdbpie may have compatibility issues with Python 3.10+
+# Consider using cinemagoer as an alternative: pip install cinemagoer
+imdbpie>=5.6.0
